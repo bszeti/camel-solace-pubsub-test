@@ -23,15 +23,7 @@ By default parameters are taken from link:src/main/resources/application.propert
 
 == Broker connection
 
-The app supports CORE, AMQP, OPENWIRE and MQTT protocols to connect to the broker. The connection string must set to match the selected protocol.
-
-CORE example:
-
-```
-# https://access.redhat.com/documentation/en-us/red_hat_amq_clients/2.11/html-single/using_the_amq_core_protocol_jms_client/index#configuration_options
-connection.type=CORE
-connection.remoteUrl=tcp://localhost:61616?retryInterval=100;retryIntervalMultiplier=1.0;reconnectAttempts=30;consumerWindowSize=4000
-```
+The app supports AMQP, SOLACE SMF and MQTT protocols to connect to the broker. The connection string must set to match the selected protocol.
 
 AMQP example:
 
@@ -41,12 +33,11 @@ connection.type=AMQP
 connection.remoteUrl=amqp://localhost:5672?jms.prefetchPolicy.all=10
 ```
 
-OPENWIRE example:
+SOLACE SMF example:
 
 ```
-# https://activemq.apache.org/connection-configuration-uri
-connection.type=OPENWIRE
-connection.remoteUrl=failover:(tcp://localhost:61616)?maxReconnectDelay=10000
+connection.type=SOLACE
+connection.remoteUrl=tcps://localhost:55443
 ```
 
 MQTT example:
@@ -71,8 +62,8 @@ send.headers.length=40
 send.count=10
 send.shutdownEnabled=true
 
-connection.type=CORE
-connection.remoteUrl=tcp://localhost:61616
+connection.type=SOLACE
+connection.remoteUrl=tcp://localhost:55555
 connection.username=admin
 connection.password=admin
 ```
@@ -122,8 +113,8 @@ receive.destination=q1
 # Instead of "receive.destination" and parameters above we could set the whole JMS component endpoint "receive.endpoint" directly
 #receive.endpoint=jms:queue:q1?concurrentConsumers=2&transacted=false&cacheLevelName=CACHE_CONSUMER
 
-connection.type=CORE
-connection.remoteUrl=tcp://localhost:61616
+connection.type=SOLACE
+connection.remoteUrl=tcp://localhost:55555
 connection.username=admin
 connection.password=admin
 ```
@@ -159,8 +150,8 @@ receive.forward.enabled=true
 receive.forward.endpoint=jms:queue:q1.forward
 receive.forward.propagation=PROPAGATION_REQUIRED
 
-connection.type=OPENWIRE
-connection.remoteUrl=failover(tcp://localhost:61616)?maxReconnectDelay=1000
+connection.type=AMQP
+connection.remoteUrl=failover(amqp://localhost:5672)?maxReconnectDelay=1000
 ```
 
 Ideally this would end up with 10k messages on "q1.forward" queue.
@@ -185,4 +176,4 @@ The app can be packaged in a container using link:Dockerfile[`Dockerfile`] or wi
 A built image is available as `quay.io/bszeti/camel-solace-pubsub-test:latest`.
 
 We can put "application.properties" in a ConfigMap like link:yamls/configmap.yaml[`yamls/configmap.yaml`] and then create a Kubernetes _Job_ to run the container image as link:yamls/job.yaml[`yamls/job.yaml`].
-An example _ActiveMQArtemis_ CR for the _AMQ Broker Operator_ can be found in link:yamls/activemqartemis.yaml[`yamls/activemqartemis.yaml`]
+An example _PubSubPlusEventBroker_ CR for the _Solace PubSub+ Event Broker Operator_ can be found in link:yamls/broker/pubsub-ha.yaml[`yamls/broker/pubsub-ha.yaml`]
