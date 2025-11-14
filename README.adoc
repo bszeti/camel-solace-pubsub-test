@@ -2,9 +2,11 @@
 
 This application can send, receive and optionally forward messages to a Solace PubSub message broker.
 
+Also see related repo https://github.com/bszeti/solace-pubsub-on-openshift[Solace PubSub+ on OpenShift].
+
 == Build & run
 
-The app is based on Apache Camel v2 (Red Hat Fuse v7) running on Spring Boot v2. Build should be simple with Maven v3.8 using Java 17:
+The app is based on Apache Camel v2 (Red Hat Fuse v7) running on Spring Boot v2. Build should be simple with Maven v3.8 using Java 11+:
 
 `mvn clean install`
 

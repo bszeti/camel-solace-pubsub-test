@@ -20,4 +20,3 @@ spec:
   
   adminCredentialsSecret: admin-passwords
   monitoringCredentialsSecret: admin-passwords
-  extraEnvVarsCM: "ha-env"

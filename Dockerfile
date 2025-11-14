@@ -8,7 +8,7 @@ LABEL src https://github.com/bszeti/camel-solace-pubsub-test
 # Source
 COPY ./ /tmp/src/
 USER root
-RUN chmod -R "g=u" /tmp/src
+# RUN chmod -R "g=u" /tmp/src
 
 # Maven build
 RUN /usr/local/s2i/assemble
