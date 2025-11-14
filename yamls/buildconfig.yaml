@@ -13,7 +13,7 @@ spec:
     sourceStrategy:
       from:
         kind: DockerImage
-        name: 'registry.redhat.io/fuse7/fuse-java-openshift-rhel8:1.11'
+        name: 'registry.redhat.io/fuse7/fuse-java-openshift-jdk17-rhel8:1.13'
       env: []
   triggers:
     - type: ConfigChange

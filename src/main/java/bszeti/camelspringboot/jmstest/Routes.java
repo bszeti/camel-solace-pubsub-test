@@ -123,7 +123,7 @@ public class Routes extends RouteBuilder {
         if (sendEnabled) log.info("send.endpoint: {}",sendEndpoint);
         if (receiveEnabled) log.info("receive.endpoint: {}",receiveEndpoint);
         if (receiveForwardEnabled) log.info("receive.forward.endpoint: {}",receiveForwardEndpoint);
-        log.info("transactionPolicy: {}",transactionPolicy);
+        log.debug("transactionPolicy: {}",transactionPolicy);
     }
 
     public void addExtraHeaders(@Headers Map<Object,Object> headers){
@@ -173,7 +173,7 @@ public class Routes extends RouteBuilder {
 
         // Send messages -  send.threads X send.count
         // Message body is from property send.message. For examepl a simple experessions: #{'$'}{exchangeId}/#{'$'}{header.CamelLoopIndex}
-        // Add a UUID header. Use send.headeruuid=_CUSTOM_MSG_ID
+        // Add a UUID header. Use send.headeruuid=CUSTOM_MSG_ID
         from("timer:sender?period=1&repeatCount={{send.threads}}")
             .routeId("send").autoStartup("{{send.enabled}}")
                 .onCompletion()

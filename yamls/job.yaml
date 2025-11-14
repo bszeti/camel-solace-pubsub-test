@@ -1,7 +1,10 @@
+# oc apply -f configmap.yaml
+# oc create -f job.yaml
+# oc logs -f job.batch/camel-solace-pubsub-test-send-...
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: camel-solace-pubsub-test
+  generateName: camel-solace-pubsub-test-send-receive
 spec:
   template:
     spec:
@@ -11,10 +14,10 @@ spec:
           resources:
             limits:
               cpu: '2'
-              memory: 2Gi
+              memory: 1Gi
             requests:
-              cpu: 50m
-              memory: 512Mi
+              cpu: 200m
+              memory: 1Gi
           command:
             - /bin/sh
             - '-c'
@@ -30,9 +33,7 @@ spec:
               readOnly: true
               mountPath: /deployments/application-receive.properties
               subPath: application-receive.properties
-#          image: quay.io/bszeti/camel-solace-pubsub-test:latest
-#          image: image-registry.openshift-image-registry.svc:5000/myproject/camel-solace-pubsub-test:latest
-          image: camel-solace-pubsub-test:latest
+          image: quay.io/bszeti/camel-solace-pubsub-test:latest
       volumes:
         - name: configmap-camel-solace-pubsub-test
           configMap:
